@@ -1,0 +1,32 @@
+# Core Python
+numpy
+pandas
+scikit-learn
+
+# Audio processing
+librosa==0.10.1
+soundfile
+pydub
+
+# Deep Learning (PyTorch)
+torch
+torchvision
+torchaudio
+
+# HuggingFace (Wav2Vec2 fine-tuning)
+transformers
+datasets
+evaluate
+accelerate
+
+# Visualization
+matplotlib
+seaborn
+
+# Utilities
+tqdm
+joblib
+
+# Optional but useful
+jupyter
+notebook
