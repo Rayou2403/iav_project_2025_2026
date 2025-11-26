@@ -7,7 +7,7 @@ def extract_mfcc(audio, sr=16000, n_mfcc=40):
         sr=sr,
         n_mfcc=n_mfcc
     )
-    return mfcc.T   # shape (time, n_mfcc)
+    return mfcc.T   
 
 def extract_melspec(audio, sr=16000, n_mels=128):
     mel = librosa.feature.melspectrogram(

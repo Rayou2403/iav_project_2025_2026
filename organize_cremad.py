@@ -23,7 +23,7 @@ for fname in os.listdir(src):
         continue
 
     parts = fname.split("_")
-    emotion_code = parts[2]  # ANG, SAD, etc.
+    emotion_code = parts[2]  
     emotion = emotion_codes.get(emotion_code)
 
     if emotion is None:
