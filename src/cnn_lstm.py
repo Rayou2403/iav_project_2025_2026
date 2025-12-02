@@ -24,13 +24,22 @@ class CNNLSTM(nn.Module):
         # Classif finale
         self.fc = nn.Linear(64, n_classes)
 
-    def forward(self, x):
-        # x shape: (batch, time, 40)
-        x = x.transpose(1, 2)      
-        x = self.conv(x)
-        x = x.transpose(1, 2)      
+    def forward(self, x, lengths):
+        # x: [batch, T, 40]
 
-        out, _ = self.lstm(x)      
-        out = out[:, -1]           
+        x = x.transpose(1, 2)  # [batch, 40, T]
+        x = self.conv(x)
+        x = x.transpose(1, 2)  # [batch, T, 64]
+
+        out, _ = self.lstm(x)  # out: [batch, T, 64]
+
+        # Récupération de la dernière vraie frame (pas du padding)
+        batch_size = x.size(0)
+        last_outputs = []
+        for i in range(batch_size):
+            last_outputs.append(out[i, lengths[i]-1])
+
+        out = torch.stack(last_outputs)  # [batch, 64]
 
         return self.fc(out)
+

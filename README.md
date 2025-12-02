@@ -1,54 +1,34 @@
-Projet : Speech Emotion Recognition
+# Speech Emotion Recognition (SER)
+Advanced AI – Final Project  
+Authors: Rayane Belkalem, Kenza Briber, Falamoudou Koné
 
-1. Préprocessing audio
-- Chargement des fichiers en mono
-- Resampling en 16 kHz
-- Normalisation
-- Suppression des silences
-- Génération d’augmentations (pitch, bruit, time-stretch, shift)
+---
 
-2. Extraction des features
-MelSpectrogram :
-- Représentation temps/fréquence
-- Conserve le timbre, l’intensité et les harmoniques
+## 1. Overview
+Speech Emotion Recognition (SER) aims to automatically identify human emotions from audio recordings.  
+In this project, we compare different audio representations and neural architectures using classical signal processing (Librosa) and deep learning models implemented in PyTorch.
 
-MFCC :
-- Version compressée du spectrogramme
-- 40 coefficients
-- Moins d’informations utiles pour l’émotion
+The objective is to evaluate how well different feature types (Mel-spectrograms vs MFCCs) and models (CNN vs CNN+LSTM) perform on emotion classification.
 
-3. Dataset
-- Chargement des fichiers .npy (MFCC ou MelSpec)
-- Attribution des labels d’émotion
-- Pour MFCC : padding nécessaire car les durées varient
+---
 
-4. Modèle CNN (MelSpectrogram)
-- Deux convolutions 2D + max-pooling
-- Modèle simple utilisé comme baseline
-- La perte descend rapidement
+## 2. Project Objectives
+- Preprocess raw audio (silence removal, resampling, normalization).
+- Extract features using Librosa:
+  - Mel-spectrograms
+  - MFCCs
+- Train and compare two architectures:
+  - 2D CNN on Mel-spectrograms (baseline model)
+  - CNN + LSTM on MFCC sequences
+- Evaluate performance using accuracy, F1-score and confusion matrices.
+- Analyse which emotions are most often confused.
 
-5. Modèle CNN + LSTM (MFCC)
-- Convolution 1D suivie d’une LSTM
-- Nécessite du padding
-- Apprentissage plus lent que le CNN 2D
+---
 
-6. Observations
-- Le CNN 2D sur MelSpectrogram fonctionne mieux
-- Le CNN+LSTM sur MFCC progresse mais reste moins performant
-- Les MFCC contiennent moins d’informations que les MelSpectrograms
+## 3. Dataset
+We use processed versions of the CREMA-D dataset (and optionally RAVDESS).  
 
-Remarque: 
-    MFCC :
-    - Représentation compacte du signal
-    - On calcule un spectrogramme, puis on applique une transformée en cosinus
-    - Produit environ 40 coefficients par fenêtre
-    - Conserve la forme globale du spectre
-    - Perte des détails comme les harmoniques et le timbre
-    - Très utilisé en reconnaissance de parole, moins précis pour l’émotion
+### Notes
+- MFCC sequences have variable length : padding required for batch training.
+- Mel-spectrograms behave like images : no padding needed.
 
-    MelSpectrogram :
-    - Représentation temps/fréquence du signal
-    - Basé sur l’échelle Mel (proche de la perception humaine)
-    - Conserve le timbre, l’intensité et les harmoniques
-    - Apparence similaire à une image (temps × fréquences)
-    - Plus riche en détails importants pour l’émotion
